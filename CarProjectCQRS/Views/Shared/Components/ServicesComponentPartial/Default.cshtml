@@ -1,0 +1,25 @@
+@model List<CarProjectCQRS.CQRSPattern.Results.Service.GetServiceQueryResult>
+
+    
+  
+<div class="container-fluid service py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
+			@foreach (var item in Model)
+			{
+				var wors = item.Title.Split(' ');
+				var firstWord = wors.Length > 0 ? wors[0] : "";
+				var secondWord = wors.Length > 1 ? wors[1] : "";
+
+                <h1 class="display-5 text-capitalize mb-3">@firstWord <span class="text-primary">@secondWord</span></h1>
+                <p class="mb-0">
+                    @item.Description
+                </p>
+                
+                           
+			}
+            @await Component.InvokeAsync("ServiceIconComponentPartial")
+        </div>
+    </div>
+</div>
+

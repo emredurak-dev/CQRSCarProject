@@ -1,0 +1,169 @@
+@model CarProjectCQRS.Models.AvailableCarsViewModel
+@{
+    ViewData["Title"] = "Booking Confirmation";
+    Layout = "~/Views/Shared/_CarsBookingLayout.cshtml";
+}
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
+            <h1 class="display-5 text-capitalize mb-3">Booking <span class="text-primary">Confirmation</span></h1>
+            <p class="mb-0">Please review your booking details before confirming.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Booking Summary</h4>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.AvailableCars.Any())
+                        {
+                            var car = Model.AvailableCars.First();
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img src="@car.ImageUrl" class="img-fluid rounded" alt="@car.Brand @car.Model">
+                                </div>
+                                <div class="col-md-8">
+                                    <h3>@car.Brand @car.Model</h3>
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <strong>Pick Up Location:</strong><br>
+                                            @Model.SearchCriteria.PickUpLocation
+                                        </div>
+                                        <div class="col-6">
+                                            <strong>Drop Off Location:</strong><br>
+                                            @Model.SearchCriteria.DropOffLocation
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <strong>Pick Up Date:</strong><br>
+                                            @Model.SearchCriteria.PickUpDate.ToString("dd/MM/yyyy")
+                                        </div>
+                                        <div class="col-6">
+                                            <strong>Drop Off Date:</strong><br>
+                                            @Model.SearchCriteria.DropOffDate.ToString("dd/MM/yyyy")
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <strong>Duration:</strong><br>
+                                            @Model.TotalDays day(s)
+                                        </div>
+                                        <div class="col-6">
+                                            <strong>Daily Rate:</strong><br>
+                                            $@car.DailyPrice.ToString("0.00")
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <h4 class="text-primary">Total Price:</h4>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <h4 class="text-primary">$@Model.TotalPrice.ToString("0.00")</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="card-footer">
+                        <form method="post" action="@Url.Action("ConfirmBooking", "Booking")">
+                            <input type="hidden" name="CarId" value="@Model.SearchCriteria.CarId" />
+                            <input type="hidden" name="PickUpLocation" value="@Model.SearchCriteria.PickUpLocation" />
+                            <input type="hidden" name="DropOffLocation" value="@Model.SearchCriteria.DropOffLocation" />
+                            <input type="hidden" name="PickUpDate" value="@Model.SearchCriteria.PickUpDate.ToString("yyyy-MM-dd")" />
+                            <input type="hidden" name="DropOffDate" value="@Model.SearchCriteria.DropOffDate.ToString("yyyy-MM-dd")" />
+                            <input type="hidden" name="AirportId" value="@(Model.SearchCriteria.AirportId ?? 0)" />
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="@Url.Action("AvailableCars", "Booking", new { 
+                                        carId = Model.SearchCriteria.CarId,
+                                        pickUpLocation = Model.SearchCriteria.PickUpLocation,
+                                        dropOffLocation = Model.SearchCriteria.DropOffLocation,
+                                        pickUpDate = Model.SearchCriteria.PickUpDate,
+                                        dropOffDate = Model.SearchCriteria.DropOffDate,
+                                        airportId = Model.SearchCriteria.AirportId
+                                    })" class="btn btn-outline-secondary w-100">
+                                        <i class="fas fa-arrow-left me-2"></i>Back to Cars
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-success w-100" onclick="confirmBooking()">
+                                        <i class="fas fa-check me-2"></i>Confirm Booking
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmBooking() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Are you sure you want to confirm this booking? This action cannot be undone.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#dc3545',
+            confirmButtonText: 'Yes, confirm booking!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.querySelector('form').submit();
+            }
+        });
+    }
+    
+    // Sayfa yüklendiğinde başarı mesajını kontrol et
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, checking for messages...');
+        
+        @if (TempData["Success"] != null)
+        {
+            <text>
+            console.log('Success message found: @Html.Raw(TempData["Success"])');
+            Swal.fire({
+                title: 'Reservation Successful!',
+                text: '@Html.Raw(TempData["Success"])',
+                icon: 'success',
+                confirmButtonColor: '#28a745',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("Index", "MainUi")';
+                }
+            });
+            </text>
+        }
+        
+        @if (TempData["Error"] != null)
+        {
+            <text>
+            console.log('Error message found: @Html.Raw(TempData["Error"])');
+            Swal.fire({
+                title: 'Error!',
+                text: '@Html.Raw(TempData["Error"])',
+                icon: 'error',
+                confirmButtonColor: '#dc3545',
+                confirmButtonText: 'OK'
+            });
+            </text>
+        }
+        
+        console.log('No messages found');
+    });
+</script>
+

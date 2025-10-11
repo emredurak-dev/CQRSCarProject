@@ -1,0 +1,85 @@
+﻿@model List<CarProjectCQRS.CQRSPattern.Results.About.GetAboutQueryResult>
+
+<div class="container-fluid overflow-hidden about py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+                @foreach (var item in Model)
+                {
+                    var words = item.Title.Split(' ');
+                    var firstWord = words.Length > 0 ? words[0] : "";
+                    var secondWord = words.Length > 1 ? words[1] : "";
+
+                    <div class="pb-5">
+                        <h1 class="display-5 text-capitalize">
+                            @firstWord <span class="text-primary">@secondWord</span>
+                        </h1>
+                        <p class="mb-0">
+                            @item.Description
+                        </p>
+                    </div>
+                }
+
+                <div class="about-item">
+                    @await Component.InvokeAsync("AboutIconComponentPartial")
+                    @foreach (var item in Model)
+                    {
+                        <p class="text-item my-4">
+                            @item.MissionDescription
+                        </p>
+                    }
+
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="text-center rounded bg-secondary p-4">
+                                <h1 class="display-6 text-white">17</h1>
+                                <h5 class="text-light mb-0">Years Of Experience</h5>
+                            </div>
+                        </div>
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-6">
+                                <div class="rounded">
+                                    <p class="mb-2"><i class="fa fa-check-circle text-primary me-1"></i> @item.ExperienceItem1</p>
+                                    <p class="mb-2"><i class="fa fa-check-circle text-primary me-1"></i>  @item.ExperienceItem2</p>
+                                    <p class="mb-2"><i class="fa fa-check-circle text-primary me-1"></i>  @item.ExperienceItem3</p>
+                                    <p class="mb-0"><i class="fa fa-check-circle text-primary me-1"></i>  @item.ExperienceItem4</p>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-lg-5 d-flex align-items-center">
+                            <a href="#" class="btn btn-primary rounded py-3 px-5">More About Us</a>
+                        </div>
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-7">
+                                <div class="d-flex align-items-center">
+                                    <img src="@item.FounderImageUrl" class="img-fluid rounded-circle border border-4 border-secondary" style="width: 100px; height: 100px;" alt="Image">
+                                    <div class="ms-4">
+                                        <h4>@item.FounderName</h4>
+                                        <p class="mb-0">@item.FounderTitle</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                            </div>
+                    </div>
+            </div>
+			@foreach (var item in Model)
+			{
+                <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
+                    <div class="about-img">
+                        <div class="img-1">
+                            <img src="@item.SecondaryImageUrl" class="img-fluid rounded h-100 w-100" alt="">
+                        </div>
+                        <div class="img-2">
+                            <img src="@item.MainImageUrl" class="img-fluid rounded w-100" alt="">
+                        </div>
+                    </div>
+                </div>
+			}
+           
+        </div>
+    </div>
+</div>
