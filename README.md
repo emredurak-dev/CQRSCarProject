@@ -182,3 +182,11 @@ It features an **AI-powered car recommendation engine**, **real-time API integra
 ---
 
 ## 📸 Screenshots
+![WhatsApp Image 2025-10-16 at 06 27 26_c7be63ac](https://github.com/user-attachments/assets/a47b6732-614a-4447-9bcc-57c384264ac2)
+![WhatsApp Image 2025-10-16 at 06 27 26_233ef2e0](https://github.com/user-attachments/assets/28c9a5ac-b7c7-4fb7-9c5b-591558e5beac)
+![WhatsApp Image 2025-10-16 at 06 27 25_76242980](https://github.com/user-attachments/assets/9d1d63a7-9361-4add-96c2-c6ff7bd02a77)
+<img width="1900" height="1007" alt="Screenshot 2025-10-11 045719" src="https://github.com/user-attachments/assets/43cf29e6-6aa0-41d5-9210-ba7a532d2c6f" />
+<img width="1900" height="862" alt="Screenshot 2025-10-11 045645" src="https://github.com/user-attachments/assets/054395d2-e61a-46d8-b265-08da13934587" />
+<img width="1901" height="976" alt="Screenshot 2025-10-11 045621" src="https://github.com/user-attachments/assets/de6d3f81-580e-4856-add7-73952518542a" />
+<img width="1901" height="935" alt="Screenshot 2025-10-11 045610" src="https://github.com/user-attachments/assets/5c09e0b6-48da-467e-bca7-0291209cdd79" />
+<img width="1896" height="1007" alt="Screenshot 2025-10-11 045549" src="https://github.com/user-attachments/assets/0d09fdca-b485-4482-9a52-d69f40ef8175" />
